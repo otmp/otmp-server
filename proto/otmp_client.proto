@@ -1,0 +1,13 @@
+message Connect {
+  required string username = 1;
+  required string password = 2;
+}
+
+message Disconnect {
+  required string sessionid = 1;
+}
+
+message ClientEgressChatMsg {
+  required string sessionid = 1;
+  required string msg = 2;
+}

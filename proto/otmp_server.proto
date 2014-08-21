@@ -1,0 +1,14 @@
+message ConnectResp {
+  required bool success = 1;
+  optional string sessionid = 2;
+}
+
+message ForceDisconnect {
+  required string sessionid = 1;
+  optional string msg = 2;
+}
+
+message ServerEgressChatMsg {
+  required string username = 1;
+  required string msg = 2;
+}
