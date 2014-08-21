@@ -1,0 +1,3 @@
+message Ping {
+  required int32 id = 1;
+}
