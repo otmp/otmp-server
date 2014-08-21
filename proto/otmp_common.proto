@@ -8,3 +8,7 @@ message Pong {
   required string sessionid = 2;
 }
 
+message Meta {
+  required string msgtype = 1;
+  required bytes msg = 2;
+}
