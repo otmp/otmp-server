@@ -1,0 +1,12 @@
+{application, otmpd,
+ [
+  {description, ""},
+  {vsn, git},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { otmpd_app, []}},
+  {env, []}
+ ]}.
