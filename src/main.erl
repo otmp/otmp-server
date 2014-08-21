@@ -1,4 +1,5 @@
 -module(main).
+-import(otmpd, [handleMsg/1]).
 -export([start/0]).
 
 start() ->
@@ -13,7 +14,8 @@ loop(Socket) ->
     inet:setopts(Socket, [{active, once}]),
     receive
         {udp, Socket, Host, Port, Bin} ->
-            io:format("Recv -> ~p~n",[Bin]),
+            io:format("Recv from ~p:~p@~p -> ~p~n",[Host, Port, Socket, Bin]),
+            otmpd:handle_msg(Bin),
             gen_udp:send(Socket, Host, Port, Bin),
             loop(Socket)
     end.
