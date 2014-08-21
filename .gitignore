@@ -8,8 +8,7 @@ logs
 deps
 .eunit
 .directory
-src/protobuffs_parser.erl
-src/protobuffs_scanner.erl
-erl_crash.dump
-test/Emakefile
 .rebar
+src/*_proto.erl
+include/*_proto.hrl
+erl_crash.dump
