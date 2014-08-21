@@ -1,3 +1,5 @@
 #!/bin/sh
-erlc *.erl
+pushd src
+erl -make
 erl -s main start
+popd
