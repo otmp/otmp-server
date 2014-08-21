@@ -1,13 +1,13 @@
-message Connect {
+message connect {
   required string username = 1;
   required string password = 2;
 }
 
-message Disconnect {
+message disconnect {
   required string sessionid = 1;
 }
 
-message ClientEgressChatMsg {
+message client_egress_chat_msg {
   required string sessionid = 1;
   required string msg = 2;
 }

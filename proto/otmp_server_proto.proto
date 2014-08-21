@@ -1,14 +1,14 @@
-message ConnectResp {
+message connect_resp {
   required bool success = 1;
   optional string sessionid = 2;
 }
 
-message ForceDisconnect {
+message force_disconnect {
   required string sessionid = 1;
   optional string msg = 2;
 }
 
-message ServerEgressChatMsg {
+message server_egress_chat_msg {
   required string username = 1;
   required string msg = 2;
 }

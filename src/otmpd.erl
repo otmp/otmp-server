@@ -1,19 +1,19 @@
 -module(otmpd).
--export([handle_msg/4]).
+-export([handler/0]).
 
-handle_msg(Socket, Host, Port, Bin) ->
-  io:format("Recv from ~p:~p@~p, ~p~n", [Host, Port, Socket, Bin]),
-  %M = otmp_common:encode_msg({'Meta', "Connect", <<"1","2","3">>}).                            
-  { _, MsgName, Payload } = otmp_common_proto:decode_msg(Bin, 'Meta'),
-  case MsgName of
-    "Connect"    -> handle_connect(Payload);
-    "Disconnect" -> handle_disconnect(Payload)
+handler() ->
+  receive
+    {udp, Socket, Host, Port, Bin} ->
+      { _, MsgName, Payload } = otmp_meta_proto:decode_msg(Bin, meta),
+      spawn(fun() -> handle(MsgName, Payload, {Socket, Host, Port}) end),
+      handler()
   end.
 
-handle_disconnect(Payload) ->
-  P = otmp_client_proto:decode_msg(Payload, 'Disconnect'),
-  io:format("Recv DISCONNECT -> ~p", [P]).
+handle(connect, Payload, _Hostdata) ->
+  P = otmp_client_proto:decode_msg(Payload, connect),
+  io:format("Recv CONNECT -> ~p~n", [P]);
 
-handle_connect(Payload) ->
-  P = otmp_client_proto:decode_msg(Payload, 'Connect'),
-  io:format("Recv CONNECT -> ~p", [P]).
+handle(disconnect, Payload, _Hostdata) ->
+  P = otmp_client_proto:decode_msg(Payload, disconnect),
+  io:format("Recv DISCONNECT -> ~p~n", [P]).
+

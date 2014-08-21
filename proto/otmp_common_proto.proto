@@ -1,14 +1,9 @@
-message Ping {
+message ping {
   required int32 id = 1;
   required string sessionid = 2;
 }
 
-message Pong {
+message pong {
   required int32 id = 1;
   required string sessionid = 2;
-}
-
-message Meta {
-  required string msgtype = 1;
-  required bytes msg = 2;
 }

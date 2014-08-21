@@ -1,0 +1,16 @@
+message meta {
+  required msgtype type = 1;
+  required bytes   msg  = 2;
+}
+
+enum msgtype {
+  meta                   = 0;
+  ping                   = 1;
+  pong                   = 2;
+  connect                = 3;
+  disconnect             = 4;
+  connect_resp           = 5;
+  force_disconnect       = 6;
+  client_egress_chat_msg = 7;
+  server_egress_chat_msg = 8;
+}
