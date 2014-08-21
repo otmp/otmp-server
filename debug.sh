@@ -1,5 +1,3 @@
 #!/bin/bash
-pushd src
-erl -make
+./rebar compile
 erl -noshell -pa deps/*/ebin ebin -s main start
-popd
