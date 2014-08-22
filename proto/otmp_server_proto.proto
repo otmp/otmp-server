@@ -12,3 +12,8 @@ message server_egress_chat_msg {
   required string username = 1;
   required string msg = 2;
 }
+
+message ping {
+  required int32 id = 1;
+  required string sessionid = 2;
+}

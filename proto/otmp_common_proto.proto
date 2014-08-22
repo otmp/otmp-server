@@ -1,9 +1,0 @@
-message ping {
-  required int32 id = 1;
-  required string sessionid = 2;
-}
-
-message pong {
-  required int32 id = 1;
-  required string sessionid = 2;
-}

@@ -11,3 +11,8 @@ message client_egress_chat_msg {
   required string sessionid = 1;
   required string msg = 2;
 }
+
+message pong {
+  required int32 id = 1;
+  required string sessionid = 2;
+}
