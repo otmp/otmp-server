@@ -1,19 +1,19 @@
-message connect_resp {
-  required bool success = 1;
-  optional string sessionid = 2;
-}
-
-message force_disconnect {
-  required string sessionid = 1;
-  optional string msg = 2;
+message conn_status {
+  enum connstatus {
+    connected    = 0;
+    disconnected = 1;
+  }
+  required connstatus status    = 1;
+  optional string     sessionid = 2;
+  optional string     msg       = 3;
 }
 
 message server_egress_chat_msg {
   required string username = 1;
-  required string msg = 2;
+  required string msg      = 2;
 }
 
 message ping {
-  required int32 id = 1;
+  required int32  id        = 1;
   required string sessionid = 2;
 }
