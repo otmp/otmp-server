@@ -4,7 +4,7 @@
 start() ->
     io:format("-- otmpd v0.0.1 starting -- ~n"),
     spawn(fun() -> server(10502) end),
-    register(handler, spawn(otmpd, handler, [])).
+    register(handler, spawn(client_handler, handler, [])).
 
 server(Port) ->
     {ok, Socket} = gen_udp:open(Port, [binary, {active, false}]),
