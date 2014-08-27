@@ -1,3 +1,5 @@
+package otmp.meta;
+
 message meta {
   enum msgtype {
     meta                   = 0;

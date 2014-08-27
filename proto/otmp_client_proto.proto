@@ -1,3 +1,5 @@
+package otmp.client;
+
 message connect {
   required string username = 1;
   required string password = 2;

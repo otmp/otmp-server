@@ -1,3 +1,5 @@
+package otmp.server;
+
 message conn_status {
   enum connstatus {
     connected    = 0;
