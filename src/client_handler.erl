@@ -18,14 +18,15 @@ handle(client_egress_chat_msg, Bin, Socket, Host, Port) ->
   erlang:error(connect_failed);
 
 handle(connect, Bin, Socket, Host, Port) ->
-  P = otmp_client_proto:decode_msg(Bin, connect),
-  S = otmp_server_proto:encode_msg({conn_status,
-                                    connected,
-                                    "d34db33f",
-                                    "Welcome to OTMPd!"}),
-  M = otmp_meta_proto:encode_msg({meta, connect_resp, S}),
-  io:format("Recv ~p -> ~p~n", [connect, P]),
-  gen_udp:send(Socket, Host, Port, M);
+  Payload   = otmp_client_proto:decode_msg(Bin, connect),
+  io:format("Recv ~p -> ~p~n", [connect, Payload]),
+  StatusMsg = otmp_server_proto:encode_msg({conn_status,
+                                            connected,
+                                            "d34db33f",
+                                            "Welcome to OTMPd!"}),
+  MetaPacket = otmp_meta_proto:encode_msg({meta, conn_status, StatusMsg}),
+  io:format("Xmit ~p -> ~p~n", [connect, MetaPacket]),
+  gen_udp:send(Socket, Host, Port, MetaPacket);
 
 handle(disconnect, Bin, Socket, Host, Port) ->
   P = otmp_client_proto:decode_msg(Bin, disconnect),
