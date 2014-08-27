@@ -4,33 +4,38 @@
 handler() ->
   receive
     {udp, Socket, Host, Port, Bin} ->
-      spawn(fun() -> handle(meta, Bin, {Socket, Host, Port}) end),
+      spawn(fun() -> handle(meta, Bin, Socket, Host, Port) end),
       handler()
   end.
 
-handle(meta, Bin, Hostdata) ->
-  { _, MsgName, Payload } = otmp_meta_proto:decode_msg(Bin, meta),
-  handle(MsgName, Payload, Hostdata);
+handle(meta, Bin, Socket, Host, Port) ->
+  { _Func, MsgName, Payload } = otmp_meta_proto:decode_msg(Bin, meta),
+  handle(MsgName, Payload, Socket, Host, Port);
 
-handle(client_egress_chat_msg, Bin, _Hostdata) ->
+handle(client_egress_chat_msg, Bin, Socket, Host, Port) ->
   P = otmp_client_proto:decode_msg(Bin, client_egress_chat_msg),
   io:format("Recv ~p -> ~p~n", [client_egress_chat_msg, P]),
   erlang:error(connect_failed);
 
-handle(connect, Bin, _Hostdata) ->
+handle(connect, Bin, Socket, Host, Port) ->
   P = otmp_client_proto:decode_msg(Bin, connect),
+  S = otmp_server_proto:encode_msg({conn_status,
+                                    connected,
+                                    "d34db33f",
+                                    "Welcome to OTMPd!"}),
+  M = otmp_meta_proto:encode_msg({meta, connect_resp, S}),
   io:format("Recv ~p -> ~p~n", [connect, P]),
-  erlang:error(connect_failed);
+  gen_udp:send(Socket, Host, Port, M);
 
-handle(disconnect, Bin, _Hostdata) ->
+handle(disconnect, Bin, Socket, Host, Port) ->
   P = otmp_client_proto:decode_msg(Bin, disconnect),
   io:format("Recv ~p -> ~p~n", [disconnect, P]),
   erlang:error(connect_failed);
 
-handle(pong, Bin, _Hostdata) ->
+handle(pong, Bin, Socket, Host, Port) ->
   P = otmp_client_proto:decode_msg(Bin, pong),
   io:format("Recv ~p -> ~p~n", [pong, P]),
   erlang:error(connect_failed);
 
-handle(_MsgType, _Bin, _Hostdata) ->
+handle(_MsgType, _Bin, _Socket, _Host, _Port) ->
   erlang:error(stop_sending_me_garbage).
