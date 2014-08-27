@@ -7,10 +7,9 @@ message meta {
     pong                   = 2;
     connect                = 3;
     disconnect             = 4;
-    connect_resp           = 5;
-    force_disconnect       = 6;
-    client_egress_chat_msg = 7;
-    server_egress_chat_msg = 8;
+    conn_status            = 5;
+    client_egress_chat_msg = 6;
+    server_egress_chat_msg = 7;
   }
   required msgtype type = 1;
   required bytes   msg  = 2;
