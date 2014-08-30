@@ -5,7 +5,8 @@
   {registered, []},
   {applications, [
                   kernel,
-                  stdlib
+                  stdlib,
+                  sharded_eredis
                  ]},
   {mod, { otmpd_app, []}},
   {env, []}

@@ -1,3 +1,3 @@
 #!/bin/bash
 ./rebar compile
-erl -pa deps/*/ebin ebin -s main start
+erl -pa deps/*/ebin ebin -config otmpd
